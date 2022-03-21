@@ -23,7 +23,7 @@ export const formatDate = (date: Date): string => {
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    return `${addZeroToDate(day)}/${addZeroToDate(month)}/${year}`;
+    return `${addZeroToDate(day)}-${addZeroToDate(month)}-${year}`;
 }
 
 const addZeroToDate = (n: number): string => n < 10 ? `0${n}` : `${n}`;
@@ -33,4 +33,16 @@ export const formatMonth = (currentMonth: string): string => {
     let months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     return `${months[parseInt(month) - 1]} de ${year}`
+}
+
+export const reverseDate = (date: string): string => {
+    let [day, month, year] = date.split('-');
+
+    return `${year}-${month}-${day}`;
+}
+
+export const strToDate = (strDate: string): Date => {
+    let [year, month, day] = strDate.split('-');
+
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
 }

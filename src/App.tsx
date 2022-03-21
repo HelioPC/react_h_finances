@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import * as C from './styles';
 
 import { Item } from './types/Item';
-import { Category } from './types/Category';
 import { items } from './data/items';
 import { categories } from './data/categories';
 
 import { filterListByMonth, getCurrentMonth } from './helpers/dateFilter';
 import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
+import { InputArea } from './components/InputArea';
 
 function App() {
   const [list, setList] = useState(items);
@@ -41,10 +41,23 @@ function App() {
     setCurrentMonth(newMonth);
   }
 
+  const handleAddItem = (item: Item) => {
+    let newList = [...list];
+    newList.push(item);
+    setList(newList);
+  }
+
   return (
     <C.Container>
       <C.Header>
-        <C.HeaderText>Sistema Financeiro</C.HeaderText>
+        <C.HeaderText>
+          <h1>
+            H-Finances
+            <span>H-Finances</span>
+            <span>H-Finances</span>
+            <span>Developed by HELIOPC</span>
+          </h1>
+        </C.HeaderText>
       </C.Header>
 
       <C.Body>
@@ -55,7 +68,7 @@ function App() {
           expense={expense}
         />
 
-        {/* Área de inserção */}
+        <InputArea onAdd={handleAddItem} />
 
         <TableArea list={filteredList} />
       </C.Body>
