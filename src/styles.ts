@@ -8,13 +8,14 @@ export const Header = styled.div`
     text-align: center;
 `;
 
-export const HeaderText = styled.h1`
+export const HeaderText = styled.div`
     margin: 0;
     padding: 0;
     color: #FFF;
     padding-top: 30px;
 
     h1 {
+        font-size: 58px;
         cursor: none;
         position: absolute;
         top: 10%;

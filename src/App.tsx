@@ -3,20 +3,24 @@ import { useState, useEffect } from 'react';
 import * as C from './styles';
 
 import { Item } from './types/Item';
-import { items } from './data/items';
 import { categories } from './data/categories';
 
 import { filterListByMonth, getCurrentMonth } from './helpers/dateFilter';
 import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
+import api from './api/api';
 
 function App() {
-  const [list, setList] = useState(items);
+  const [list, setList] = useState<Item[]>([]);
   const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
   const [filteredList, setFilteredList] = useState<Item[]>([]);
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
+
+  useEffect(() => {
+    api.loadItems(setList);
+  }, [list]);
 
   useEffect(() => {
     setFilteredList(filterListByMonth(list, currentMonth));
@@ -35,7 +39,7 @@ function App() {
 
     setIncome(incomeCount);
     setExpense(expenseCount);
-  }, [filteredList])
+  }, [filteredList]);
 
   const handleMonthChange = (newMonth: string) => {
     setCurrentMonth(newMonth);
@@ -45,6 +49,7 @@ function App() {
     let newList = [...list];
     newList.push(item);
     setList(newList);
+    api.addItem(item);
   }
 
   return (
