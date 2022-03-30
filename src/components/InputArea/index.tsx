@@ -78,10 +78,13 @@ export const InputArea = ({ onAdd }: Props) => {
                         Categoria
                     </option>
                     <option value='food' >Alimentação</option>
-                    <option value='rent' >Aluguel</option>
+                    <option value='rent' >Renda</option>
                     <option value='salary' >Salário</option>
                     <option value='entertainment' >Entretenimento</option>
                     <option value='extra' >Extra</option>
+                    <option value='debt' >Dívida</option>
+                    <option value='bribery' >Suborno</option>
+                    <option value='loan' >Empréstimo</option>
                 </select>
             </C.SelectArea>
 
