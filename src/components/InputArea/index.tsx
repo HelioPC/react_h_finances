@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AlertError } from '../../helpers/alert';
 import { formatDate, reverseDate, strToDate } from '../../helpers/dateFilter';
 import { Item } from '../../types/Item';
 import * as C from './styles';
@@ -37,7 +38,13 @@ export const InputArea = ({ onAdd }: Props) => {
             typeof date.getTime() !== 'number' ||
             category === '' || title === '' ||
             value === 0
-        ) return;
+        ) {
+            AlertError({
+                title: 'Erro inesperado',
+                description: 'Verifique se todos os campos estão bem preenchidos',
+            })
+            return;
+        }
 
         let newItem: Item = {
             date: date,

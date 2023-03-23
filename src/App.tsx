@@ -10,6 +10,7 @@ import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
 import api from './api/api';
+import { AlertError, AlertSuccess } from './helpers/alert';
 
 function App() {
   const [list, setList] = useState<Item[]>([]);
@@ -30,8 +31,8 @@ function App() {
     let incomeCount = 0;
     let expenseCount = 0;
 
-    for(let i in filteredList) {
-      if(categories[filteredList[i].category].expense)
+    for (let i in filteredList) {
+      if (categories[filteredList[i].category].expense)
         expenseCount += filteredList[i].value;
 
       else incomeCount += filteredList[i].value;
@@ -49,7 +50,13 @@ function App() {
     let newList = [...list];
     newList.push(item);
     setList(newList);
-    api.addItem(item);
+    api.addItem(item).then((s) => AlertSuccess({
+      title: 'Transação adicionada',
+      description: `Transação '${item.title}' com o valor de '${item.value} kz'`
+    })).catch((e) => AlertError({
+      title: 'Erro inesperado',
+      description: 'A transação não foi adicionada'
+    }))
   }
 
   return (
