@@ -23,7 +23,7 @@ export const formatDate = (date: Date): string => {
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    return `${addZeroToDate(day)}-${addZeroToDate(month)}-${year}`;
+    return `${year}-${addZeroToDate(month)}-${addZeroToDate(day)}`;
 }
 
 const addZeroToDate = (n: number): string => n < 10 ? `0${n}` : `${n}`;

@@ -46,7 +46,8 @@ export const ButtonArea = styled.div<{ disabled: boolean }>`
         height: 100%;
         border-radius: 10px;
 
-        ${props => props.disabled ? '' : `
+        ${props => props.disabled ? 
+        'border: 1px solid black' : `
             background-color: darkblue;
             color: #FFF;
             cursor: pointer;
@@ -55,7 +56,6 @@ export const ButtonArea = styled.div<{ disabled: boolean }>`
 
             &:hover {
                 transform: scale(1.05);
-                font-size: 90%;
             }
         `}
     }

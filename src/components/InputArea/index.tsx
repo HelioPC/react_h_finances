@@ -8,8 +8,8 @@ type Props = {
 }
 
 export const InputArea = ({ onAdd }: Props) => {
-    const MAXVALUE = Math.pow(10, 9);
-    const [date, setDate] = useState<Date>(Object);
+    const MAXVALUE = Math.pow(10, 6);
+    const [date, setDate] = useState<Date>(new Date());
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
     const [value, setValue] = useState(0);
@@ -17,14 +17,27 @@ export const InputArea = ({ onAdd }: Props) => {
 
     useEffect(() => {
         const checkInputs = () => {
-            setDisabled(date === Object() || category === '' || title === '' || value === 0 || isNaN(value));
+            try {
+                setDisabled(
+                    typeof date.getTime() !== 'number' ||
+                    category === '' || title === '' ||
+                    typeof value !== 'number' ||
+                    value === 0 || isNaN(value)
+                );
+            } catch (error) {
+                setDisabled(true)
+            }
         }
 
         checkInputs();
     }, [category, date, title, value])
 
     const handleAddEvent = () => {
-        if(date === Object() || category === '' || title === '' || value === 0) return;
+        if(
+            typeof date.getTime() !== 'number' ||
+            category === '' || title === '' ||
+            value === 0
+        ) return;
 
         let newItem: Item = {
             date: date,
@@ -33,9 +46,11 @@ export const InputArea = ({ onAdd }: Props) => {
             value: value
         };
 
+        console.log(newItem)
+
         onAdd(newItem);
 
-        setDate(Object);
+        setDate(new Date());
         setCategory('');
         setTitle('');
         setValue(0);
@@ -56,6 +71,7 @@ export const InputArea = ({ onAdd }: Props) => {
 
                 <input
                     type='date'
+                    value={formatDate(date)}
                     onChange={(e) => handleDateChange(e.target.value)}
                     min={'2021-12-01'}
                     max={reverseDate(formatDate(new Date()))}
@@ -105,7 +121,10 @@ export const InputArea = ({ onAdd }: Props) => {
                     min={0}
                     max={MAXVALUE}
                     value={value}
-                    onChange={(e) => setValue(parseInt(e.target.value))}
+                    onChange={(e) => {
+                        let n = parseInt(e.target.value) === 0 ? 0 : parseInt(e.target.value) || ''
+                        setValue(n as number)
+                    }}
                     required
                 />
             </C.InputArea>
